@@ -43,7 +43,7 @@ public class UIHelper
      * utility method to read an Image by path
      * 
      * @param path the path
-     * @return the image corresponding to the icon
+     * @return the image corresponding to the provided path
      */
     public static Image readImage(String path)
     {
