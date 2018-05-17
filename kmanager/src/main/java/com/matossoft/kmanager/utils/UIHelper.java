@@ -1,37 +1,61 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2018 https://github.com/joaodmsmatos/
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.matossoft.kmanager.utils;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
- * UIHelper provides constants to be used in the
- * kmanager graphical user interface
+ * <code>UIHelper</code> provides utility methods 
+ * to be used in the kmanager graphical user interface
  * 
- * @author joaod
+ * @author https://github.com/joaodmsmatos/
+ * @since 5.18.2018
  */
 public class UIHelper 
 {
-    /** tier 1 color - dark green*/ 
-    public static final Color COLOR_TIER1 = new Color(0, 102, 0);
+    /** the logger*/
+    private static final Logger LOG = Logger.getLogger(UIConstants.class.getName());
     
-    /** tier 2 color - medium green*/ 
-    public static final Color COLOR_TIER2 = new Color(0, 153, 0);
-    
-    /** tier 3 color - light green*/ 
-    public static final Color COLOR_TIER3 = new Color(0, 235, 0);
-    
-    /** font small */ 
-    public static final Font FONT_SMALL = new java.awt.Font("Lucida Console", 0, 9);
-    
-    /** font medium */ 
-    public static final Font FONT_MEDIUM = new java.awt.Font("Lucida Console", 0, 13);
-    
-    /** font big */ 
-    public static final Font FONT_BIG = new java.awt.Font("Lucida Console", 0, 18);
-    
+    /** 
+     * private constructor
+     */ 
+    private UIHelper() {}
+
+    /**
+     * utility method to read an Image by path
+     * 
+     * @param path the path
+     * @return the image corresponding to the icon
+     */
+    public static Image readImage(String path)
+    {
+        Image i = null;
+        
+        try {
+            i = ImageIO.read(ClassLoader.getSystemResource(path));    
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE, null, ex);
+        }
+        return i;
+    }
 }
+
+

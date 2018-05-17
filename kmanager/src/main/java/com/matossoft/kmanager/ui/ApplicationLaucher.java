@@ -20,10 +20,14 @@ import com.matossoft.kmanager.model.Model;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
+
 /**
- * ApplicationLauncehr provides the kmanager application entry point
+ * <code>ApplicationLaucher</code> provides the kmanager application entry point,
+ * Key manager application is implemented using the Model View Controller
+ * and Observer design patterns
  * 
- * @author @author https://github.com/joaodmsmatos/
+ * @author https://github.com/joaodmsmatos/
+ * @since 5.18.2018
  */
 public class ApplicationLaucher 
 {
@@ -31,12 +35,12 @@ public class ApplicationLaucher
     private static final Logger LOG = Logger.getLogger(ApplicationLaucher.class.getName());
     
     /**
-     * Application entry point
+     * kmanager application entry point
      * 
      * @param args the application arguments 
      */
     public static void main(String[] args)
-    {
+    {           
         // create ui frame
         final ViewController vc = new ViewController();
      
@@ -47,9 +51,6 @@ public class ApplicationLaucher
         m.addObserver(vc);
         
         //launch application
-        SwingUtilities.invokeLater(() -> 
-        {
-            vc.setVisible(true);
-        }); 
+        SwingUtilities.invokeLater(() -> vc.setVisible(true)); 
     }
 }

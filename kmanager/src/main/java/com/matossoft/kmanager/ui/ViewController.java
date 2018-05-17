@@ -16,23 +16,42 @@
  */
 package com.matossoft.kmanager.ui;
 
+import com.matossoft.kmanager.utils.UIConstants;
 import com.matossoft.kmanager.utils.UIHelper;
+
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
- *
+ * <code>ViewController</code> implements <code>Observer</code> interface
+ * providing a view and controller for the MVC
+ * 
  * @author https://github.com/joaodmsmatos/
+ * @since 5.18.2018
  */
-public class ViewController extends javax.swing.JFrame implements Observer{
+public class ViewController extends JFrame implements Observer{
+	
+	/** serial version unique id */
+	private static final long serialVersionUID = -1089020228511926022L;
 
+	/** The logger*/
+    private static final Logger LOG = Logger.getLogger(ViewController.class.getName());
+    
     /**
      * Creates new form ui
      */
     public ViewController() {
-        initComponents();
+
+        initComponents();        
+        
+        //set frame icon
+        this.setIconImage(UIHelper.readImage(UIConstants.KMANAGER_ICON_PATH));
+
     }
 
+    //TODO: refactor the generated code
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,23 +62,46 @@ public class ViewController extends javax.swing.JFrame implements Observer{
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 255, 0));
-        setFont(new java.awt.Font("Lucida Console", 0, 10)); // NOI18N
+        setFont(UIConstants.FONT_MEDIUM);
 
-        jPanel1.setBackground(UIHelper.COLOR_TIER1);
+        jPanel1.setBackground(UIConstants.COLOR_TIER1);
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1573, Short.MAX_VALUE)
+        jPanel3.setBackground(UIConstants.COLOR_TIER2);
+
+        jPanel2.setBackground(UIConstants.COLOR_TIER1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 385, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1176, Short.MAX_VALUE)
         );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1170, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,5 +124,8 @@ public class ViewController extends javax.swing.JFrame implements Observer{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
+
 }
