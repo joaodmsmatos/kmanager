@@ -1,2 +1,2 @@
 # kmanager
-Key manager
+kmanager is an open source key manager tool.
