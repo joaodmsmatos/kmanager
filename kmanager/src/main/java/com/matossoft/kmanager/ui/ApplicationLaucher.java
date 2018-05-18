@@ -17,7 +17,6 @@
 package com.matossoft.kmanager.ui;
 
 import com.matossoft.kmanager.model.KManagerModel;
-import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
