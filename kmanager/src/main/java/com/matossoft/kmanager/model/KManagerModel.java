@@ -23,7 +23,7 @@ import java.util.Observable;
  * @author https://github.com/joaodmsmatos/
  * @since 5.18.2018
  */
-public class Model extends Observable
+public class KManagerModel extends Observable
 { 
     
 }

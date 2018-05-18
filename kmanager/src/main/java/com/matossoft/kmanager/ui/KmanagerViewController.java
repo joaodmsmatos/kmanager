@@ -31,20 +31,24 @@ import javax.swing.JFrame;
  * @author https://github.com/joaodmsmatos/
  * @since 5.18.2018
  */
-public class ViewController extends JFrame implements Observer{
+public class KmanagerViewController extends JFrame implements Observer{
 	
 	/** serial version unique id */
 	private static final long serialVersionUID = -1089020228511926022L;
 
 	/** The logger*/
-    private static final Logger LOG = Logger.getLogger(ViewController.class.getName());
+    private static final Logger LOG = Logger.getLogger(KmanagerViewController.class.getName());
     
     /**
      * Creates new form ui
      */
-    public ViewController() {
+    public KmanagerViewController() {
 
         initComponents();        
+        
+        //center frame
+        setLocationRelativeTo(null);
+        setAlwaysOnTop(true);
         
         //set frame icon
         this.setIconImage(UIHelper.readImage(UIConstants.KMANAGER_ICON_PATH));

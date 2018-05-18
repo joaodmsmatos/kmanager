@@ -16,7 +16,9 @@
  */
 package com.matossoft.kmanager.ui;
 
-import com.matossoft.kmanager.model.Model;
+import com.matossoft.kmanager.model.KManagerModel;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
@@ -41,16 +43,35 @@ public class ApplicationLaucher
      */
     public static void main(String[] args)
     {           
-        // create ui frame
-        final ViewController vc = new ViewController();
-     
-        //create model   
-        Model m = new Model();
-        
-        //add observer
-        m.addObserver(vc);
-        
-        //launch application
-        SwingUtilities.invokeLater(() -> vc.setVisible(true)); 
+            // create ui frames
+            final KmanagerViewController kvc = new KmanagerViewController();
+            final LoginViewController lvc = new LoginViewController();
+            
+            //create model
+            KManagerModel m = new KManagerModel();
+            
+            //add observers
+            m.addObserver(kvc);
+            
+            //launch login
+            SwingUtilities.invokeLater(() -> lvc.setVisible(true));
+
+            // wait for for the login completion
+            while (lvc.isDisplayable())
+            {
+                try 
+                {
+                    Thread.sleep(500);
+                } 
+                catch (InterruptedException ex) 
+                {
+                    LOG.log(Level.WARNING, "thread interrupted", ex);
+                    // restore the interrupted state
+                    Thread.currentThread().interrupt();
+                }
+            }
+            
+            //launch application
+            SwingUtilities.invokeLater(() -> kvc.setVisible(true));
     }
 }
