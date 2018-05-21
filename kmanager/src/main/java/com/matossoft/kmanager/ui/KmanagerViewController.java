@@ -22,14 +22,19 @@ import com.matossoft.kmanager.ui.components.ComponentFactory.ComponentType;
 import com.matossoft.kmanager.utils.UIConstants;
 import com.matossoft.kmanager.utils.UIHelper;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -50,10 +55,13 @@ public class KmanagerViewController extends JFrame implements Observer
 	/** Kmanager frame dimension */ 
 	private static final Dimension KMANAGER_FRAME_DIMENSION = new Dimension(1450, 900);
 	
-	/** Dashboard panel dimension */ 	
-	private static final Dimension KMANAGER_IMAGE_DIMENSION = new Dimension(400, 150);
+	/** Logo panel dimension */ 	
+	private static final Dimension LOGO_PANEL_DIMENSION = new Dimension(400, 150);
 	
-	/** Argument panel dimension */
+	/** Filler panel dimension */ 	
+	private static final Dimension FILLER_PANEL_DIMENSION = new Dimension(400, 75);
+	
+	/** Dashboard panel dimension */
 	private static final Dimension LEFT_ARGUMENT_PANEL_DIMENSION = new Dimension(400, 900);
 	
 	/** Argument panel dimension */
@@ -83,8 +91,8 @@ public class KmanagerViewController extends JFrame implements Observer
         setAlwaysOnTop(true);
         
         // create child components
-        createLeftArgumentPanel();
-        createRightArgumentPanel();
+        createDashboardPanel();
+        createArgumentPanel();
         pack();   
         
         //center frame
@@ -96,7 +104,7 @@ public class KmanagerViewController extends JFrame implements Observer
      * dashboard options
      * 
      */
-    private void createLeftArgumentPanel()
+    private void createDashboardPanel()
     {
     	JPanel leftArgumentPanel = new JPanel();
     	leftArgumentPanel.setBackground(UIConstants.COLOR_TIER1);
@@ -105,7 +113,61 @@ public class KmanagerViewController extends JFrame implements Observer
     	leftArgumentPanel.setMinimumSize(LEFT_ARGUMENT_PANEL_DIMENSION);
     	leftArgumentPanel.setMaximumSize(LEFT_ARGUMENT_PANEL_DIMENSION);
     	leftArgumentPanel.setLayout(new BoxLayout(leftArgumentPanel,BoxLayout.Y_AXIS));
-    	leftArgumentPanel.add(ComponentFactory.getComponent(ComponentType.LOGO_PANEL, KMANAGER_IMAGE_DIMENSION));
+    	
+    	// create child components
+    	leftArgumentPanel.add(ComponentFactory.getComponent(ComponentType.LOGO_PANEL, LOGO_PANEL_DIMENSION));
+    	
+    	// add filler
+    	JPanel filler = (JPanel) ComponentFactory.getComponent(ComponentType.LOGO_PANEL, FILLER_PANEL_DIMENSION);
+    	filler.remove(0);
+    	leftArgumentPanel.add(filler);
+    	
+    	// add dashboard panel
+    	JPanel dashboardPanel = new JPanel(new FlowLayout());
+    	dashboardPanel.setOpaque(false);
+  	
+    	JLabel preferencesLabel = new JLabel();
+    	preferencesLabel.setText("Preferences  ");
+    	preferencesLabel.setFont(UIConstants.FONT_MEDIUM);
+    	preferencesLabel.setForeground(Color.WHITE);
+    	preferencesLabel.setHorizontalTextPosition(JLabel.CENTER);
+    	preferencesLabel.setVerticalTextPosition(JLabel.BOTTOM);
+    	preferencesLabel.setIcon(new ImageIcon(UIHelper.readImage(UIConstants.PREFERENCES_ICON_PATH)));
+    	dashboardPanel.add(preferencesLabel);
+    	
+    	JLabel passwordsLabel = new JLabel();
+    	passwordsLabel.setText("Passwords  ");
+    	passwordsLabel.setFont(UIConstants.FONT_MEDIUM);
+    	passwordsLabel.setForeground(Color.WHITE);
+    	passwordsLabel.setHorizontalTextPosition(JLabel.CENTER);
+    	passwordsLabel.setVerticalTextPosition(JLabel.BOTTOM);
+    	passwordsLabel.setIcon(new ImageIcon(UIHelper.readImage(UIConstants.PASSWORDS_ICON_PATH)));
+    	dashboardPanel.add(passwordsLabel);
+    	
+    	JLabel filesLabel = new JLabel();
+    	filesLabel.setText("Secure Notes");
+    	filesLabel.setFont(UIConstants.FONT_MEDIUM);
+    	filesLabel.setForeground(Color.WHITE);
+    	filesLabel.setHorizontalTextPosition(JLabel.CENTER);
+    	filesLabel.setVerticalTextPosition(JLabel.BOTTOM);
+    	filesLabel.setIcon(new ImageIcon(UIHelper.readImage(UIConstants.ENCRYPTED_FILES_ICON_PATH)));
+    	dashboardPanel.add(filesLabel);
+    	
+    	leftArgumentPanel.add(dashboardPanel);
+    	
+    	// create info panel
+    	JPanel infoPanel = new JPanel(new BorderLayout());
+    	JLabel infoLabel = new JLabel();
+    	infoLabel.setText("  Application Details");
+    	infoLabel.setFont(UIConstants.FONT_MEDIUM);
+    	infoLabel.setForeground(Color.WHITE);
+    	infoLabel.setHorizontalTextPosition(JLabel.LEFT);
+    	infoLabel.setVerticalTextPosition(JLabel.CENTER);
+    	infoLabel.setIcon(new ImageIcon(UIHelper.readImage(UIConstants.INFO_ICON_PATH)));
+    	infoPanel.setOpaque(false);
+    	infoPanel.add(infoLabel,BorderLayout.PAGE_END);
+ 
+    	leftArgumentPanel.add(infoPanel);
     	
     	getContentPane().add(leftArgumentPanel);
     }
@@ -113,10 +175,11 @@ public class KmanagerViewController extends JFrame implements Observer
     /**
      * Create right argument panel, moreover 
      * here will reside the table list with 
-     * the application keys, or the encrypted notes
+     * the application keys, the encrypted notes
+     * or the preferences page
      * 
      */
-    private void createRightArgumentPanel()
+    private void createArgumentPanel()
     {
     	JPanel rightArgumentPanel = new JPanel();
     	rightArgumentPanel.setBackground(UIConstants.COLOR_TIER2);

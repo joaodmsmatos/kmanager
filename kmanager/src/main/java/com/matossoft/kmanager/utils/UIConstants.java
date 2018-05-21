@@ -40,10 +40,10 @@ public class UIConstants
     public static final Color COLOR_TIER3 = new Color(0, 235, 0);
     
     /** font small */ 
-    public static final Font FONT_SMALL = new Font("Segoe UI", 0, 9);
+    public static final Font FONT_SMALL = new Font("Segoe UI", 0, 13);
     
     /** font medium */ 
-    public static final Font FONT_MEDIUM = new Font("Segoe UI", 0, 13);
+    public static final Font FONT_MEDIUM = new Font("Segoe UI", 0, 18);
     
     /** font big */ 
     public static final Font FONT_BIG = new Font("Segoe UI", 0, 28);
@@ -53,6 +53,18 @@ public class UIConstants
      
     /** kmanager logo image path*/
     public static final String KMANAGER_LOGO_IMAGE_PATH = "images/kmanagerLogo.png";
+    
+    /** preferences icon path*/
+    public static final String PREFERENCES_ICON_PATH = "icons/icons8-services-filled-50.png"; 
+    
+    /** passwords icon path*/
+    public static final String PASSWORDS_ICON_PATH = "icons/icons8-key-2-50.png"; 
+    
+    /** encrypted notes icon path*/
+    public static final String ENCRYPTED_FILES_ICON_PATH = "icons/icons8-file-50.png"; 
+   
+    /** info icon path*/
+    public static final String INFO_ICON_PATH = "icons/icons8-about-26.png";  
 
     /** 
      * private constructor
