@@ -43,7 +43,7 @@ public class UIConstants
     public static final Font FONT_SMALL = new Font("Segoe UI", 0, 13);
     
     /** font medium */ 
-    public static final Font FONT_MEDIUM = new Font("Segoe UI", 0, 18);
+    public static final Font FONT_MEDIUM = new Font("Segoe UI", 0, 17);
     
     /** font big */ 
     public static final Font FONT_BIG = new Font("Segoe UI", 0, 28);
@@ -64,7 +64,7 @@ public class UIConstants
     public static final String ENCRYPTED_FILES_ICON_PATH = "icons/icons8-file-50.png"; 
    
     /** info icon path*/
-    public static final String INFO_ICON_PATH = "icons/icons8-about-26.png";  
+    public static final String INFO_ICON_PATH = "icons/icons8-about-16.png";  
 
     /** 
      * private constructor

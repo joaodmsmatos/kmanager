@@ -38,12 +38,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.WindowConstants;
 
 /**
- *
+ * <code>LoginViewController</code> implements <code>Observer</code> interface,
+ * providing a view and controller for the Login MVC
+ * 
  * @author https://github.com/joaodmsmatos/
+ * @since 5.18.2018
  */
 public class LoginViewController extends JFrame implements Observer
 {
@@ -86,12 +89,12 @@ public class LoginViewController extends JFrame implements Observer
     {
     	// set attributes
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBackground(UIConstants.COLOR_TIER2);
         setMaximumSize(LOGIN_FRAME_DIMENSION);
         setMinimumSize(LOGIN_FRAME_DIMENSION);
         setPreferredSize(LOGIN_FRAME_DIMENSION);
         setIconImage(UIHelper.readImage(UIConstants.KMANAGER_ICON_PATH));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        getContentPane().setBackground(UIConstants.COLOR_TIER1);
         setResizable(false);
         
         // create child components
@@ -136,13 +139,15 @@ public class LoginViewController extends JFrame implements Observer
         loginLabel.setFont(UIConstants.FONT_MEDIUM);
         loginLabel.setForeground(Color.WHITE);
         loginLabel.setText("login");
-        JTextField loginTextField = new JTextField(12);
+        JPasswordField loginTextField = new JPasswordField(12);
+        loginTextField.setEchoChar('*');
         loginTextField.setBackground(UIConstants.COLOR_TIER1);
         JLabel mpasswordLabel = new JLabel();
         mpasswordLabel.setFont(UIConstants.FONT_MEDIUM);
         mpasswordLabel.setForeground(Color.WHITE);
         mpasswordLabel.setText("master password");        
-        JTextField mpasswordTextField = new JTextField(12);
+        JPasswordField mpasswordTextField = new JPasswordField(12);
+        mpasswordTextField.setEchoChar('*');
         mpasswordTextField.setBackground(UIConstants.COLOR_TIER1);
 
         // add childs

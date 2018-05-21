@@ -48,7 +48,7 @@ public class ApplicationLaucher
 		final LoginModel lm = new LoginModel();
 
 		// create ui frames
-		final KmanagerViewController kvc = new KmanagerViewController();
+		final KmanagerViewController kvc = new KmanagerViewController(km);
 		final LoginViewController lvc = new LoginViewController(lm, kvc);
 		
 		// add observers

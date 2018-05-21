@@ -44,7 +44,9 @@ public class ComponentFactory
 	 */
 	public enum ComponentType 
 	{
-		LOGO_PANEL, UNKNOWN
+		LOGO_PANEL,
+		FILLER_PANEL,
+		UNKNOWN
 	}
 
 	/**
@@ -68,6 +70,8 @@ public class ComponentFactory
 		{
 			case LOGO_PANEL:
 				return getKmanagerLogoPanel(dim);
+			case FILLER_PANEL:
+				return getgEmptyFillerPanel(dim);
 			case UNKNOWN:
 			default:
 				return null;
@@ -75,7 +79,8 @@ public class ComponentFactory
 	}
 
 	/**
-	 * Get the Logo Panel
+	 * Creates a Logo Panel, inherits the parent component 
+	 * background color
 	 * 
 	 * @param dim
 	 *            the dimension of the Logo Panel
@@ -83,15 +88,9 @@ public class ComponentFactory
 	 */
 	private static Component getKmanagerLogoPanel(Dimension dim) 
 	{
-		// set attributes
-		JPanel kmanagerLogoPanel = new JPanel();
-		kmanagerLogoPanel.setBackground(UIConstants.COLOR_TIER1);
-		kmanagerLogoPanel.setInheritsPopupMenu(true);
-		kmanagerLogoPanel.setMaximumSize(dim);
-		kmanagerLogoPanel.setMinimumSize(dim);
-		kmanagerLogoPanel.setPreferredSize(dim);
-		kmanagerLogoPanel.setLayout(new GridBagLayout());
-		
+		//create panel
+		JPanel kmanagerLogoPanel = (JPanel) getgEmptyFillerPanel(dim);
+
 		// set child component
 		JLabel kmanagerImageLabel = new JLabel();
 		kmanagerImageLabel.setAlignmentX(0.5f);
@@ -99,5 +98,26 @@ public class ComponentFactory
 		kmanagerImageLabel.setIcon(new ImageIcon(UIHelper.readImage(UIConstants.KMANAGER_LOGO_IMAGE_PATH)));
 		kmanagerLogoPanel.add(kmanagerImageLabel);
 		return kmanagerLogoPanel;
+	}
+	
+	/**
+	 * Creates a filler, inherits the parent component
+	 * background color
+	 * 
+	 * @param dim
+	 *            the dimension of the Filler Panel
+	 * @return the Filler Panel
+	 */
+	public static Component getgEmptyFillerPanel(Dimension dim) 
+	{
+		// set attributes
+		JPanel panel = new JPanel();
+		panel.setInheritsPopupMenu(true);
+		panel.setMaximumSize(dim);
+		panel.setMinimumSize(dim);
+		panel.setPreferredSize(dim);
+		panel.setLayout(new GridBagLayout());
+		panel.setOpaque(false);
+		return panel;
 	}
 }

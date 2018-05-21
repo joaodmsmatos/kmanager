@@ -33,7 +33,7 @@ import com.matossoft.kmanager.ui.KmanagerViewController;
 public class LoginModel extends Observable
 { 
 	/** the login state */
-	private LoginState state = new LoginState();
+	private LoginState state;
 	
 	/**
 	 * LoginModel constructor
