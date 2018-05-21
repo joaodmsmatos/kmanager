@@ -51,16 +51,16 @@ public class LoginViewController extends JFrame implements Observer
 	private static final long serialVersionUID = 8364713166207457306L;
 	
 	/** Login frame dimension */ 
-	private static final Dimension loginDialogDimension = new Dimension(525, 450);
+	private static final Dimension LOGIN_FRAME_DIMENSION = new Dimension(525, 450);
 	
 	/** Logo panel dimension */ 	
-	private static final Dimension kanagerImageDimension = new Dimension(525, 150);
+	private static final Dimension KMANAGER_IMAGE_DIMENSION = new Dimension(525, 150);
 	
 	/** Argument panel dimension */
-	private static final Dimension argumentPanelDimentsion = new Dimension(525, 200);
+	private static final Dimension ARGUMENT_PANEL_DIMENSION = new Dimension(525, 200);
 	
 	/** Confirm panel dimension*/
-	private static final Dimension confirmPanelDimentsion = new Dimension(525, 100);
+	private static final Dimension CONFIRM_PANEL_DIMENSION = new Dimension(525, 100);
 	
 	/** The login model */
 	private transient LoginModel loginModel;
@@ -87,9 +87,9 @@ public class LoginViewController extends JFrame implements Observer
     	// set attributes
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBackground(UIConstants.COLOR_TIER2);
-        setMaximumSize(loginDialogDimension);
-        setMinimumSize(loginDialogDimension);
-        setPreferredSize(loginDialogDimension);
+        setMaximumSize(LOGIN_FRAME_DIMENSION);
+        setMinimumSize(LOGIN_FRAME_DIMENSION);
+        setPreferredSize(LOGIN_FRAME_DIMENSION);
         setIconImage(UIHelper.readImage(UIConstants.KMANAGER_ICON_PATH));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setResizable(false);
@@ -111,7 +111,7 @@ public class LoginViewController extends JFrame implements Observer
     private void createLogopanel()
     {
     	JPanel kmanagerLogoPanel = (JPanel) ComponentFactory.
-    			getComponent(ComponentType.LOGO_PANEL, kanagerImageDimension);
+    			getComponent(ComponentType.LOGO_PANEL, KMANAGER_IMAGE_DIMENSION);
         
     	// add logo panel to content pane
         getContentPane().add(kmanagerLogoPanel);
@@ -125,9 +125,9 @@ public class LoginViewController extends JFrame implements Observer
     	// set attributes
         JPanel argumentPanel = new JPanel();
         argumentPanel.setBackground(UIConstants.COLOR_TIER2);
-        argumentPanel.setMaximumSize(argumentPanelDimentsion);
-        argumentPanel.setMinimumSize(argumentPanelDimentsion);
-        argumentPanel.setPreferredSize(argumentPanelDimentsion);
+        argumentPanel.setMaximumSize(ARGUMENT_PANEL_DIMENSION);
+        argumentPanel.setMinimumSize(ARGUMENT_PANEL_DIMENSION);
+        argumentPanel.setPreferredSize(ARGUMENT_PANEL_DIMENSION);
         argumentPanel.setRequestFocusEnabled(false);
         argumentPanel.setLayout(new GridBagLayout());
 
@@ -137,7 +137,7 @@ public class LoginViewController extends JFrame implements Observer
         loginLabel.setForeground(Color.WHITE);
         loginLabel.setText("login");
         JTextField loginTextField = new JTextField(12);
-        loginTextField.setBackground(UIConstants.COLOR_TIER1);       
+        loginTextField.setBackground(UIConstants.COLOR_TIER1);
         JLabel mpasswordLabel = new JLabel();
         mpasswordLabel.setFont(UIConstants.FONT_MEDIUM);
         mpasswordLabel.setForeground(Color.WHITE);
@@ -175,9 +175,9 @@ public class LoginViewController extends JFrame implements Observer
     	// set attributes
     	JPanel confirmPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     	confirmPanel.setBackground(UIConstants.COLOR_TIER2);
-    	confirmPanel.setPreferredSize(confirmPanelDimentsion);
-    	confirmPanel.setMaximumSize(confirmPanelDimentsion);
-    	confirmPanel.setMinimumSize(confirmPanelDimentsion);
+    	confirmPanel.setPreferredSize(CONFIRM_PANEL_DIMENSION);
+    	confirmPanel.setMaximumSize(CONFIRM_PANEL_DIMENSION);
+    	confirmPanel.setMinimumSize(CONFIRM_PANEL_DIMENSION);
     	
     	//set child arguments
     	JLabel okLabel = new JLabel();

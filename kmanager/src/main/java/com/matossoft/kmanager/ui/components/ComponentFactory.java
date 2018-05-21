@@ -18,6 +18,7 @@ package com.matossoft.kmanager.ui.components;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -89,11 +90,12 @@ public class ComponentFactory
 		kmanagerLogoPanel.setMaximumSize(dim);
 		kmanagerLogoPanel.setMinimumSize(dim);
 		kmanagerLogoPanel.setPreferredSize(dim);
+		kmanagerLogoPanel.setLayout(new GridBagLayout());
+		
 		// set child component
 		JLabel kmanagerImageLabel = new JLabel();
-		kmanagerImageLabel.setMinimumSize(dim);
-		kmanagerImageLabel.setMaximumSize(dim);
-		kmanagerImageLabel.setPreferredSize(dim);
+		kmanagerImageLabel.setAlignmentX(0.5f);
+		kmanagerImageLabel.setAlignmentY(0.5f);
 		kmanagerImageLabel.setIcon(new ImageIcon(UIHelper.readImage(UIConstants.KMANAGER_LOGO_IMAGE_PATH)));
 		kmanagerLogoPanel.add(kmanagerImageLabel);
 		return kmanagerLogoPanel;

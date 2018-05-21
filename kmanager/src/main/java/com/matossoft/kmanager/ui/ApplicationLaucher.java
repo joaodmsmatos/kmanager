@@ -19,7 +19,6 @@ package com.matossoft.kmanager.ui;
 import com.matossoft.kmanager.model.KManagerModel;
 import com.matossoft.kmanager.model.LoginModel;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 

@@ -40,22 +40,19 @@ public class UIConstants
     public static final Color COLOR_TIER3 = new Color(0, 235, 0);
     
     /** font small */ 
-    public static final Font FONT_SMALL = new java.awt.Font("Segoe UI", 0, 9);
+    public static final Font FONT_SMALL = new Font("Segoe UI", 0, 9);
     
     /** font medium */ 
-    public static final Font FONT_MEDIUM = new java.awt.Font("Segoe UI", 0, 13);
+    public static final Font FONT_MEDIUM = new Font("Segoe UI", 0, 13);
     
     /** font big */ 
-    public static final Font FONT_BIG = new java.awt.Font("Segoe UI", 0, 28);
+    public static final Font FONT_BIG = new Font("Segoe UI", 0, 28);
     
     /** kmanager icon path*/
     public static final String KMANAGER_ICON_PATH = "icons/icons8-privacy-32.png";
      
     /** kmanager logo image path*/
-    public static final String KMANAGER_LOGO_IMAGE_PATH = "images/kmanagerVectorized.png";
-    
-    /** grass image path*/
-    public static final String GREASS_IMAGE_PATH = "images/grass.png";
+    public static final String KMANAGER_LOGO_IMAGE_PATH = "images/kmanagerLogo.png";
 
     /** 
      * private constructor
