@@ -17,14 +17,15 @@
 package com.matossoft.kmanager.ui;
 
 import com.matossoft.kmanager.model.KManagerModel;
+import com.matossoft.kmanager.model.LoginModel;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
-
 /**
- * <code>ApplicationLaucher</code> provides the kmanager application entry point,
- * Key manager application is implemented using the Model View Controller
+ * <code>ApplicationLaucher</code> provides the kmanager application entry
+ * point, Key manager application is implemented using the Model View Controller
  * and Observer design patterns
  * 
  * @author https://github.com/joaodmsmatos/
@@ -32,45 +33,30 @@ import javax.swing.SwingUtilities;
  */
 public class ApplicationLaucher 
 {
-    /** The logger*/
-    private static final Logger LOG = Logger.getLogger(ApplicationLaucher.class.getName());
-    
-    /**
-     * kmanager application entry point
-     * 
-     * @param args the application arguments 
-     */
-    public static void main(String[] args)
-    {           
-            // create ui frames
-            final KmanagerViewController kvc = new KmanagerViewController();
-            final LoginViewController lvc = new LoginViewController();
-            
-            //create model
-            KManagerModel m = new KManagerModel();
-            
-            //add observers
-            m.addObserver(kvc);
-            
-            //launch login
-            SwingUtilities.invokeLater(() -> lvc.setVisible(true));
+	/** The logger */
+	private static final Logger LOG = Logger.getLogger(ApplicationLaucher.class.getName());
 
-            // wait for for the login completion
-            while (lvc.isDisplayable())
-            {
-                try 
-                {
-                    Thread.sleep(500);
-                } 
-                catch (InterruptedException ex) 
-                {
-                    LOG.log(Level.WARNING, "thread interrupted", ex);
-                    // restore the interrupted state
-                    Thread.currentThread().interrupt();
-                }
-            }
-            
-            //launch application
-            SwingUtilities.invokeLater(() -> kvc.setVisible(true));
-    }
+	/**
+	 * kmanager application entry point
+	 * 
+	 * @param args
+	 *            the application arguments
+	 */
+	public static void main(String[] args) {
+
+		// create models
+		final KManagerModel km = new KManagerModel();
+		final LoginModel lm = new LoginModel();
+
+		// create ui frames
+		final KmanagerViewController kvc = new KmanagerViewController();
+		final LoginViewController lvc = new LoginViewController(lm, kvc);
+		
+		// add observers
+		km.addObserver(kvc);
+		lm.addObserver(lvc);
+		
+		// launch application
+		SwingUtilities.invokeLater(() -> lvc.setVisible(true));
+	}
 }

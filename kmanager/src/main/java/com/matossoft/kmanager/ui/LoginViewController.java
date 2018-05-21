@@ -16,215 +16,233 @@
  */
 package com.matossoft.kmanager.ui;
 
+import com.matossoft.kmanager.model.LoginModel;
+import com.matossoft.kmanager.state.LoginState;
 import com.matossoft.kmanager.utils.UIConstants;
 import com.matossoft.kmanager.utils.UIHelper;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 /**
  *
  * @author https://github.com/joaodmsmatos/
  */
-public class LoginViewController extends javax.swing.JFrame {
+public class LoginViewController extends JFrame implements Observer
+{
+	/** Serial version unique id*/
+	private static final long serialVersionUID = 8364713166207457306L;
+	
+	/** Login frame dimension */ 
+	private static final Dimension loginDialogDimension = new Dimension(525, 450);
+	
+	/** Logo panel dimension */ 	
+	private static final Dimension kanagerImageDimension = new Dimension(525, 150);
+	
+	/** Argument panel dimension */
+	private static final Dimension argumentPanelDimentsion = new Dimension(525, 200);
+	
+	/** Confirm panel dimension*/
+	private static final Dimension confirmPanelDimentsion = new Dimension(525, 100);
+	
+	/** The login model */
+	private transient LoginModel loginModel;
+	
+	/** The KeyManager View Controller */
+	private KmanagerViewController kvc;
+	
+	/**
+     * LoginViewController constructor
+     */
+    public LoginViewController(LoginModel loginModel, KmanagerViewController kvc)
+    {
+    	this.loginModel = loginModel;
+    	this.kvc = kvc;
+    	
+        initComponents();
+    }
 
     /**
-     * Creates new form LoginViewController
+     * Initialize components
      */
-    public LoginViewController() {
+    private void initComponents() 
+    {
+    	// set attributes
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setBackground(UIConstants.COLOR_TIER2);
+        setMaximumSize(loginDialogDimension);
+        setMinimumSize(loginDialogDimension);
+        setPreferredSize(loginDialogDimension);
+        setIconImage(UIHelper.readImage(UIConstants.KMANAGER_ICON_PATH));
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setResizable(false);
         
-        initComponents();
+        // create child components
+        createLogopanel();
+        createArgumentPanel();
+        createConfirmPanel();
+        pack();
         
         //center frame
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
+    }
         
-        //set frame icon
-        setIconImage(UIHelper.readImage(UIConstants.KMANAGER_ICON_PATH));
+    /**
+     * Create logo panel ui components
+     */
+    private void createLogopanel()
+    {
+    	// set attributes
+        JPanel kmanagerLogoPanel = new JPanel();
+        kmanagerLogoPanel.setBackground(UIConstants.COLOR_TIER1);
+        kmanagerLogoPanel.setInheritsPopupMenu(true);
+        kmanagerLogoPanel.setMaximumSize(kanagerImageDimension);
+        kmanagerLogoPanel.setMinimumSize(kanagerImageDimension);
+        kmanagerLogoPanel.setPreferredSize(kanagerImageDimension);
+        JLabel kmanagerImageLabel = new JLabel();
+        kmanagerImageLabel.setMinimumSize(kanagerImageDimension);
+        kmanagerImageLabel.setMaximumSize(kanagerImageDimension);
+        kmanagerImageLabel.setPreferredSize(kanagerImageDimension);
+        kmanagerImageLabel.setIcon(new ImageIcon(UIHelper.readImage(UIConstants.KMANAGER_LOGO_IMAGE_PATH)));
+        kmanagerLogoPanel.add(kmanagerImageLabel);       
+        
+        // add logo panel to content pane
+        getContentPane().add(kmanagerLogoPanel);
+    }
+    
+    /**
+     * Create argument panel ui components
+     */
+    private void createArgumentPanel()
+    {
+    	// set attributes
+        JPanel argumentPanel = new JPanel();
+        argumentPanel.setBackground(UIConstants.COLOR_TIER2);
+        argumentPanel.setMaximumSize(argumentPanelDimentsion);
+        argumentPanel.setMinimumSize(argumentPanelDimentsion);
+        argumentPanel.setPreferredSize(argumentPanelDimentsion);
+        argumentPanel.setRequestFocusEnabled(false);
+        argumentPanel.setLayout(new GridBagLayout());
+
+        //set child arguments
+        JLabel loginLabel = new JLabel();
+        loginLabel.setFont(UIConstants.FONT_MEDIUM);
+        loginLabel.setForeground(Color.WHITE);
+        loginLabel.setText("login");
+        JTextField loginTextField = new JTextField(12);
+        loginTextField.setBackground(UIConstants.COLOR_TIER1);       
+        JLabel mpasswordLabel = new JLabel();
+        mpasswordLabel.setFont(UIConstants.FONT_MEDIUM);
+        mpasswordLabel.setForeground(Color.WHITE);
+        mpasswordLabel.setText("master password");        
+        JTextField mpasswordTextField = new JTextField(12);
+        mpasswordTextField.setBackground(UIConstants.COLOR_TIER1);
+
+        // add childs
+        GridBagConstraints constrains = new GridBagConstraints();
+		constrains.insets = new Insets(15, 15, 15, 15);
+		constrains.gridx = 0;
+		constrains.gridy = 0;
+		argumentPanel.add(loginLabel, constrains);
+		constrains.gridx = 1;
+		constrains.gridy = 0;
+		constrains.fill = GridBagConstraints.HORIZONTAL;
+		argumentPanel.add(loginTextField, constrains);
+		constrains.gridx = 0;
+		constrains.gridy = 1;
+		argumentPanel.add(mpasswordLabel, constrains);
+		constrains.gridx = 1;
+		constrains.gridy = 1;
+		constrains.fill = GridBagConstraints.HORIZONTAL;
+		argumentPanel.add(mpasswordTextField, constrains);
+		
+		// add argument panel to content pane
+		getContentPane().add(argumentPanel);
+    }
+    
+    /**
+     * Create confirm panel ui components
+     */
+    private void createConfirmPanel()
+    {       
+    	// set attributes
+    	JPanel confirmPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    	confirmPanel.setBackground(UIConstants.COLOR_TIER2);
+    	confirmPanel.setPreferredSize(confirmPanelDimentsion);
+    	confirmPanel.setMaximumSize(confirmPanelDimentsion);
+    	confirmPanel.setMinimumSize(confirmPanelDimentsion);
+    	
+    	//set child arguments
+    	JLabel okLabel = new JLabel();
+        okLabel.setFont(UIConstants.FONT_MEDIUM);
+        okLabel.setForeground(Color.WHITE);
+        okLabel.setText("OK");
+        okLabel.setAutoscrolls(true);
+        okLabel.addMouseListener(new MouseAdapter() 
+        {
+        	@Override
+            public void mouseReleased(MouseEvent evt) 
+        	{
+        		loginModel.authenticate(kvc);
+            }
+        }); 
+        
+        JLabel cancelLabel = new JLabel();
+        cancelLabel.setFont(UIConstants.FONT_MEDIUM);
+        cancelLabel.setForeground(Color.WHITE);
+        cancelLabel.setText("Cancel");
+        cancelLabel.addMouseListener(new MouseAdapter() 
+        {
+        	@Override
+            public void mouseReleased(MouseEvent evt) 
+        	{
+        		loginModel.cancelLogin();
+            }
+        });      
+        
+        JLabel notRegisteredLabel = new JLabel();
+        notRegisteredLabel.setFont(UIConstants.FONT_MEDIUM);
+        notRegisteredLabel.setForeground(Color.WHITE);
+        notRegisteredLabel.setText("Not registered? ");
+        
+        // add childs
+    	confirmPanel.add(okLabel);
+    	confirmPanel.add(cancelLabel);
+    	confirmPanel.add(notRegisteredLabel);
+    	
+    	// add argument panel to content pane
+    	getContentPane().add(confirmPanel);
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(UIConstants.COLOR_TIER1);
-
-        jPanel1.setBackground(UIConstants.COLOR_TIER2);
-
-        jLabel7.setFont(UIConstants.FONT_MEDIUM);
-        jLabel7.setText("  login                 ");
-
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(UIConstants.FONT_MEDIUM);
-        jLabel4.setText("  master password");
-
-        jLabel5.setFont(UIConstants.FONT_MEDIUM);
-        jLabel5.setText("OK");
-        jLabel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel5.setAutoscrolls(true);
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabel5MouseReleased(evt);
-            }
-        });
-
-        jLabel3.setFont(UIConstants.FONT_MEDIUM);
-        jLabel3.setText("Not registered? ");
-        jLabel3.setAlignmentY(0.0F);
-
-        jLabel6.setFont(UIConstants.FONT_MEDIUM);
-        jLabel6.setText("Cancel");
-        jLabel6.setAlignmentY(0.0F);
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabel6MouseReleased(evt);
-            }
-        });
-
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(38, 38, 38)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
-
-    private void jLabel6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseReleased
-        System.exit(0);
-    }//GEN-LAST:event_jLabel6MouseReleased
-
-    private void jLabel5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseReleased
-        dispose();
-    }//GEN-LAST:event_jLabel5MouseReleased
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginViewController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginViewController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginViewController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginViewController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginViewController().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
-    // End of variables declaration//GEN-END:variables
+	@Override
+	public void update(Observable arg0, Object stateObj) 
+	{
+		LoginState state = (LoginState) stateObj; 
+		
+		if(state.isRegister() || state.isOk())
+		{
+			dispose();
+		}
+		
+		// restore state
+		state.setOk(false);
+		state.setRegister(false);
+	}
 }
