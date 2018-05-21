@@ -18,6 +18,8 @@ package com.matossoft.kmanager.ui;
 
 import com.matossoft.kmanager.model.LoginModel;
 import com.matossoft.kmanager.state.LoginState;
+import com.matossoft.kmanager.ui.components.ComponentFactory.ComponentType;
+import com.matossoft.kmanager.ui.components.ComponentFactory;
 import com.matossoft.kmanager.utils.UIConstants;
 import com.matossoft.kmanager.utils.UIHelper;
 
@@ -33,7 +35,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -109,21 +110,10 @@ public class LoginViewController extends JFrame implements Observer
      */
     private void createLogopanel()
     {
-    	// set attributes
-        JPanel kmanagerLogoPanel = new JPanel();
-        kmanagerLogoPanel.setBackground(UIConstants.COLOR_TIER1);
-        kmanagerLogoPanel.setInheritsPopupMenu(true);
-        kmanagerLogoPanel.setMaximumSize(kanagerImageDimension);
-        kmanagerLogoPanel.setMinimumSize(kanagerImageDimension);
-        kmanagerLogoPanel.setPreferredSize(kanagerImageDimension);
-        JLabel kmanagerImageLabel = new JLabel();
-        kmanagerImageLabel.setMinimumSize(kanagerImageDimension);
-        kmanagerImageLabel.setMaximumSize(kanagerImageDimension);
-        kmanagerImageLabel.setPreferredSize(kanagerImageDimension);
-        kmanagerImageLabel.setIcon(new ImageIcon(UIHelper.readImage(UIConstants.KMANAGER_LOGO_IMAGE_PATH)));
-        kmanagerLogoPanel.add(kmanagerImageLabel);       
+    	JPanel kmanagerLogoPanel = (JPanel) ComponentFactory.
+    			getComponent(ComponentType.LOGO_PANEL, kanagerImageDimension);
         
-        // add logo panel to content pane
+    	// add logo panel to content pane
         getContentPane().add(kmanagerLogoPanel);
     }
     
