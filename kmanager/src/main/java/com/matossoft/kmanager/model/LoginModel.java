@@ -70,7 +70,9 @@ public class LoginModel extends Observable
 	 * Register user 
 	 */
 	public void register()
-	{
+	{ 
+		// TODO: launch registration form
+		
 		state.setRegister(true);
 		setChanged();
 		notifyObservers(state);

@@ -221,6 +221,14 @@ public class LoginViewController extends JFrame implements Observer
         notRegisteredLabel.setFont(UIConstants.FONT_MEDIUM);
         notRegisteredLabel.setForeground(Color.WHITE);
         notRegisteredLabel.setText("Not registered? ");
+        notRegisteredLabel.addMouseListener(new MouseAdapter() 
+        {
+        	@Override
+            public void mouseReleased(MouseEvent evt) 
+        	{
+        		loginModel.register();
+            }
+        }); 
         
         // add childs
     	confirmPanel.add(okLabel);
@@ -236,11 +244,15 @@ public class LoginViewController extends JFrame implements Observer
 	{
 		LoginState state = (LoginState) stateObj; 
 		
-		if(state.isRegister() || state.isOk())
+		if(state.isOk())
 		{
 			dispose();
 		}
-		
+		if(state.isRegister())
+		{
+			setVisible(false);
+		}
+				
 		// restore state
 		state.setOk(false);
 		state.setRegister(false);
