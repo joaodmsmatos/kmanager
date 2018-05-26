@@ -20,7 +20,10 @@ import com.matossoft.kmanager.model.KManagerModel;
 import com.matossoft.kmanager.state.DashboardState;
 import com.matossoft.kmanager.ui.components.ComponentFactory;
 import com.matossoft.kmanager.ui.components.ComponentFactory.ComponentType;
-import com.matossoft.kmanager.ui.components.KButton;
+import com.matossoft.kmanager.ui.components.generic.KButton;
+import com.matossoft.kmanager.ui.components.kmanager.NotesPanel;
+import com.matossoft.kmanager.ui.components.kmanager.PasswordsPanel;
+import com.matossoft.kmanager.ui.components.kmanager.PreferencesPanel;
 import com.matossoft.kmanager.utils.UIConstants;
 import com.matossoft.kmanager.utils.UIHelper;
 
@@ -79,6 +82,7 @@ public class KmanagerViewController extends JFrame implements Observer
 	private KButton preferencesButton;
 	private KButton passwordsButton;
 	private KButton notesButton;
+	private JPanel rightArgumentPanel; 
 	
 	/**
 	 * Creates new form ui
@@ -185,7 +189,7 @@ public class KmanagerViewController extends JFrame implements Observer
 	 */
 	private void createArgumentPanel() 
 	{
-		JPanel rightArgumentPanel = new JPanel();
+		rightArgumentPanel = new JPanel();
 		rightArgumentPanel.setBackground(UIConstants.COLOR_TIER2);
 		rightArgumentPanel.setForeground(Color.WHITE);
 		rightArgumentPanel.setPreferredSize(RIGHT_ARGUMENT_PANEL_DIMENSION);
@@ -213,44 +217,25 @@ public class KmanagerViewController extends JFrame implements Observer
 	}
 
 	/**
-	 * Creates the preferences panel
+	 * Add panel
 	 * 
 	 * @param ParentContainer
 	 *            the parent container
 	 * @param container
 	 *            the container
 	 */
-	private void createPreferencesPanel(JPanel ParentContainer, JPanel container) 
+	private void addPanel(JPanel panel, JPanel container) 
 	{
-		// TODO
+		container.removeAll();
+		container.revalidate();
+		container.repaint();
+		container.add(panel);
 	}
-
-	/**
-	 * Creates the passwords panel
-	 * 
-	 * @param ParentContainer
-	 *            the parent container
-	 * @param container
-	 *            the container
-	 */
-	private void createPasswordsPanel(JPanel ParentContainer, JPanel container) 
-	{
-		// TODO
-	}
-
-	/**
-	 * Creates the encrypted notes panel
-	 * 
-	 * @param ParentContainer
-	 *            the parent container
-	 * @param container
-	 *            the container
-	 */
-	private void createNotesPanel(JPanel ParentContainer, JPanel container) 
-	{
-		// TODO
-	}
-
+	
+	private NotesPanel notesPanel = null;
+	private PasswordsPanel passwordsPanel = null;
+	private PreferencesPanel preferencesPanel = null;
+	
 	@Override
 	public void update(Observable o, Object stateObj) 
 	{
@@ -263,15 +248,31 @@ public class KmanagerViewController extends JFrame implements Observer
 		
 		if(dashboardState.isLaunchPreferencesPage())
 		{
-			createPreferencesPanel(null, null);
+			
+			// instantiate class in a lazy way
+			if(preferencesPanel == null)
+			{
+				preferencesPanel = new PreferencesPanel();
+			}
+			addPanel(preferencesPanel, rightArgumentPanel);
 		}
 		else if(dashboardState.isLaunchPasswordsPage())
 		{
-			createPasswordsPanel(null, null);
+			// instantiate class in a lazy way
+			if(passwordsPanel == null)
+			{
+				passwordsPanel = new PasswordsPanel();
+			}
+			addPanel(passwordsPanel, rightArgumentPanel);
 		}
 		else if(dashboardState.isLaunchNotesPage())
 		{
-			createNotesPanel(null, null);
+			// instantiate class in a lazy way
+			if(notesPanel == null)
+			{
+				notesPanel = new NotesPanel();
+			}
+			addPanel(notesPanel, rightArgumentPanel);
 		}
 	}
 }

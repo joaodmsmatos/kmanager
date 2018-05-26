@@ -19,7 +19,7 @@ package com.matossoft.kmanager.ui;
 import com.matossoft.kmanager.model.LoginModel;
 import com.matossoft.kmanager.state.LoginState;
 import com.matossoft.kmanager.ui.components.ComponentFactory.ComponentType;
-import com.matossoft.kmanager.ui.components.KButton;
+import com.matossoft.kmanager.ui.components.generic.KButton;
 import com.matossoft.kmanager.ui.components.ComponentFactory;
 import com.matossoft.kmanager.utils.UIConstants;
 import com.matossoft.kmanager.utils.UIHelper;

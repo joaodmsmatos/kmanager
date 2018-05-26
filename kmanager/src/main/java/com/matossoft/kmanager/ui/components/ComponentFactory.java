@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.matossoft.kmanager.ui.components.generic.KButton;
 import com.matossoft.kmanager.utils.UIConstants;
 import com.matossoft.kmanager.utils.UIHelper;
 

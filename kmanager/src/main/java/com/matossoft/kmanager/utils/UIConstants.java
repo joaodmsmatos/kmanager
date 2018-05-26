@@ -46,7 +46,7 @@ public class UIConstants
     public static final Font FONT_MEDIUM = new Font("Segoe UI", 0, 17);
     
     /** font big */ 
-    public static final Font FONT_BIG = new Font("Segoe UI", 0, 28);
+    public static final Font FONT_BIG = new Font("Segoe UI", Font.BOLD, 28);
     
     /** kmanager icon path*/
     public static final String KMANAGER_ICON_PATH = "icons/icons8-privacy-32.png";
