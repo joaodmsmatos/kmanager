@@ -23,7 +23,6 @@ import com.matossoft.kmanager.state.DashboardState;
 /**
  * <code>KManagerModel</code> extends <code>Observable</code>
  * and provides the key manager model
- * TODO: refactor this
  * 
  * @author https://github.com/joaodmsmatos/
  * @since 5.21.2018
@@ -65,6 +64,8 @@ public class KManagerModel extends Observable
 				dashboardState.setLaunchPreferencesPage(false);
 				dashboardState.setLaunchPasswordsPage(false);		
 				break;
+			default:
+				return;
 		}
 		setChanged();
 		notifyObservers(dashboardState);		
