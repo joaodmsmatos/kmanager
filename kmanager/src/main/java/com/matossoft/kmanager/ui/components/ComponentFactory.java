@@ -46,6 +46,7 @@ public class ComponentFactory
 	{
 		LOGO_PANEL,
 		FILLER_PANEL,
+		BUTTON,
 		UNKNOWN
 	}
 
@@ -62,9 +63,13 @@ public class ComponentFactory
 	 *            the type of the desired component
 	 * @param dim
 	 *            the dimensions of the desired component
+	 * @param name
+	 *            the component Text
+	 * @param iconPath
+	 *            the componentIconPath                      
 	 * @return the desired component
 	 */
-	public static Component getComponent(ComponentType type, Dimension dim) 
+	public static Component getComponent(ComponentType type, Dimension dim, String name, String iconPath) 
 	{
 		switch (type) 
 		{
@@ -72,6 +77,8 @@ public class ComponentFactory
 				return getKmanagerLogoPanel(dim);
 			case FILLER_PANEL:
 				return getgEmptyFillerPanel(dim);
+			case BUTTON:
+				return getButton(name, iconPath);
 			case UNKNOWN:
 			default:
 				return null;
@@ -108,7 +115,7 @@ public class ComponentFactory
 	 *            the dimension of the Filler Panel
 	 * @return the Filler Panel
 	 */
-	public static Component getgEmptyFillerPanel(Dimension dim) 
+	private static Component getgEmptyFillerPanel(Dimension dim) 
 	{
 		// set attributes
 		JPanel panel = new JPanel();
@@ -119,5 +126,23 @@ public class ComponentFactory
 		panel.setLayout(new GridBagLayout());
 		panel.setOpaque(false);
 		return panel;
+	}
+	/**
+	 * Creates a custom button, inherits the parent component
+	 * background color and its size is defined by the icon size
+	 * 
+	 * @param name
+	 *            the component Text
+	 * @param iconPath
+	 *            the componentIconPath      
+	 * @return the Filler Panel
+	 */
+	private static Component getButton(String name, String iconPath) 
+	{
+		// set attributes
+		KButton button = new KButton(name,iconPath);
+		button.setInheritsPopupMenu(true);
+		button.setOpaque(false);
+		return button;
 	}
 }

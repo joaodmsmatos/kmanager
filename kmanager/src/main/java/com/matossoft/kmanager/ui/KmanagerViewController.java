@@ -17,11 +17,10 @@
 package com.matossoft.kmanager.ui;
 
 import com.matossoft.kmanager.model.KManagerModel;
-import com.matossoft.kmanager.model.LoginModel;
 import com.matossoft.kmanager.state.DashboardState;
-import com.matossoft.kmanager.state.LoginState;
 import com.matossoft.kmanager.ui.components.ComponentFactory;
 import com.matossoft.kmanager.ui.components.ComponentFactory.ComponentType;
+import com.matossoft.kmanager.ui.components.KButton;
 import com.matossoft.kmanager.utils.UIConstants;
 import com.matossoft.kmanager.utils.UIHelper;
 
@@ -29,7 +28,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
@@ -38,11 +36,11 @@ import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 /**
  * <code>KmanagerViewController</code> implements <code>Observer</code>
@@ -78,9 +76,9 @@ public class KmanagerViewController extends JFrame implements Observer
 	private transient KManagerModel kmanagerModel;
 	
 	/** Dashboard components*/
-	private JLabel preferencesLabel;
-	private JLabel passwordsLabel;
-	private JLabel notesLabel;
+	private KButton preferencesButton;
+	private KButton passwordsButton;
+	private KButton notesButton;
 	
 	/**
 	 * Creates new form ui
@@ -109,7 +107,7 @@ public class KmanagerViewController extends JFrame implements Observer
 		createDashboardPanel();
 		createArgumentPanel();
 		pack();
-
+		
 		// center frame
 		setLocationRelativeTo(null);
 	}
@@ -131,10 +129,10 @@ public class KmanagerViewController extends JFrame implements Observer
 
 		// create child components
 		// add logo panel to left argument panel
-		leftArgumentPanel.add(ComponentFactory.getComponent(ComponentType.LOGO_PANEL, LOGO_PANEL_DIMENSION));
+		leftArgumentPanel.add(ComponentFactory.getComponent(ComponentType.LOGO_PANEL, LOGO_PANEL_DIMENSION,null,null));
 
 		// add filler to left argument panel
-		JPanel filler = (JPanel) ComponentFactory.getComponent(ComponentType.FILLER_PANEL, FILLER_PANEL_DIMENSION);
+		JPanel filler = (JPanel) ComponentFactory.getComponent(ComponentType.FILLER_PANEL, FILLER_PANEL_DIMENSION,null,null);
 
 		leftArgumentPanel.add(filler);
 
@@ -143,16 +141,19 @@ public class KmanagerViewController extends JFrame implements Observer
 		dashboardPanel.setOpaque(false);
 
 		// add preferences component to dashboard
-		preferencesLabel = createDashboardLabel("Preferences", UIConstants.PREFERENCES_ICON_PATH, dashboardPanel, new JPanel());
-		dashboardPanel.add(preferencesLabel);
+		preferencesButton = (KButton) ComponentFactory.getComponent(ComponentType.BUTTON, null,"Preferences", UIConstants.PREFERENCES_ICON_PATH);
+		addButtonListener(preferencesButton,"Preferences");
+		dashboardPanel.add(preferencesButton);
 		
 		// add password component to dashboard
-		passwordsLabel = createDashboardLabel("Passwords", UIConstants.PASSWORDS_ICON_PATH, dashboardPanel, new JPanel());
-		dashboardPanel.add(passwordsLabel);
+		passwordsButton = (KButton) ComponentFactory.getComponent(ComponentType.BUTTON,null,"Passwords", UIConstants.PASSWORDS_ICON_PATH);
+		addButtonListener(passwordsButton,"Passwords");
+		dashboardPanel.add(passwordsButton);
 		
 		// add notes component to dashboard
-		notesLabel = createDashboardLabel("Secure Notes", UIConstants.ENCRYPTED_FILES_ICON_PATH, dashboardPanel, new JPanel());
-		dashboardPanel.add(notesLabel);
+		notesButton = (KButton) ComponentFactory.getComponent(ComponentType.BUTTON,null,"Secure Notes", UIConstants.ENCRYPTED_FILES_ICON_PATH);
+		addButtonListener(notesButton,"Secure Notes");
+		dashboardPanel.add(notesButton);
 		
 		// add dashboard panel to left argument panel
 		leftArgumentPanel.add(dashboardPanel);
@@ -193,43 +194,22 @@ public class KmanagerViewController extends JFrame implements Observer
 		getContentPane().add(rightArgumentPanel);
 	}
 
-	private JLabel createDashboardLabel(String name, String IconPath, JPanel container, JPanel targetContainer)
+	/**
+	 * Add button listener
+	 * 
+	 * @param b the button
+	 * @param name the page to launch
+	 */
+	private void addButtonListener(KButton b, String name)
 	{
-		// set attributes
-		JLabel label = new JLabel();
-		label.setText(name);
-		label.setFont(UIConstants.FONT_MEDIUM);
-		label.setForeground(Color.WHITE);
-		label.setHorizontalTextPosition(JLabel.CENTER);
-		label.setVerticalTextPosition(JLabel.BOTTOM);
-		label.setIcon(new ImageIcon(UIHelper.readImage(IconPath)));
-		label.setBorder(new EmptyBorder(3, 3, 3, 3));
-
-		// set listeners
-		label.addMouseListener(new MouseAdapter() 
+		b.addMouseListener(new MouseAdapter() 
 		{
-			/*
-			@Override
-			public void mouseEntered(MouseEvent evt) 
-			{
-				//kmanagerModel.enableElement(name, true);
-				label.setBorder(new LineBorder(Color.WHITE, 3, true));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent evt) 
-			{
-				//kmanagerModel.enableElement(name, false);
-				label.setBorder(new EmptyBorder(3, 3, 3, 3));
-			}
-			*/
 			@Override
 			public void mouseReleased(MouseEvent evt) 
 			{
 				kmanagerModel.lauchPage(name);
 			}
 		});
-		return label;
 	}
 
 	/**
@@ -271,7 +251,6 @@ public class KmanagerViewController extends JFrame implements Observer
 		// TODO
 	}
 
-	// TODO refactor this, not a nice approach...
 	@Override
 	public void update(Observable o, Object stateObj) 
 	{
@@ -284,58 +263,15 @@ public class KmanagerViewController extends JFrame implements Observer
 		
 		if(dashboardState.isLaunchPreferencesPage())
 		{
-			preferencesLabel.setBorder(new LineBorder(Color.WHITE, 3, true));
-			notesLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
-			passwordsLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
 			createPreferencesPanel(null, null);
 		}
 		else if(dashboardState.isLaunchPasswordsPage())
 		{
-			passwordsLabel.setBorder(new LineBorder(Color.WHITE, 3, true));
-			notesLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
-			preferencesLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
 			createPasswordsPanel(null, null);
 		}
 		else if(dashboardState.isLaunchNotesPage())
 		{
-			notesLabel.setBorder(new LineBorder(Color.WHITE, 3, true));
-			passwordsLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
-			preferencesLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
 			createNotesPanel(null, null);
 		}
-		
-/*
-		else if(dashboardState.isPreferencesIconChanged() && dashboardState.isPreferencesIconEnabled() && !dashboardState.isLaunchPreferencesPage())
-		{
-			preferencesLabel.setBorder(new LineBorder(Color.WHITE, 3, true));
-		}
-		else if(dashboardState.isPreferencesIconChanged() && !dashboardState.isPreferencesIconEnabled() && !dashboardState.isLaunchPreferencesPage())
-		{
-			preferencesLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
-		}
-		else if(dashboardState.isPasswordsIconChanged() && dashboardState.isPasswordsIconEnabled() && !dashboardState.isLaunchPasswordsPage())
-		{
-			passwordsLabel.setBorder(new LineBorder(Color.WHITE, 3, true));
-		}
-		else if(dashboardState.isPasswordsIconChanged() && !dashboardState.isPasswordsIconEnabled() && !dashboardState.isLaunchPasswordsPage())
-		{
-			passwordsLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
-		}
-		else if(dashboardState.isNotesIconChanged() && dashboardState.isNotesIconEnabled() && !dashboardState.isLaunchNotesPage())
-		{
-			notesLabel.setBorder(new LineBorder(Color.WHITE, 3, true));
-		}
-		else if(dashboardState.isNotesIconChanged() && !dashboardState.isNotesIconEnabled() && !dashboardState.isLaunchNotesPage())
-		{
-			notesLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
-		}
-
-		//reset changed flags
-		dashboardState.setPreferencesIconChanged(false);
-		dashboardState.setPasswordsIconChanged(false);
-		dashboardState.setNotesIconChanged(false);
-*/		
-		// TEST....
-		System.out.println(dashboardState.toString());
 	}
 }

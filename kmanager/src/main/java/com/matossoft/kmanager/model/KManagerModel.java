@@ -41,55 +41,26 @@ public class KManagerModel extends Observable
 		dashboardState = new DashboardState();
 	}
 	
-	
-	public void enableElement(String name, boolean enable)
-	{
-		switch(name)
-		{
-			case "Preferences":
-				dashboardState.setPreferencesIconEnabled(enable);
-				dashboardState.setPreferencesIconChanged(true);
-				break;
-			case "Passwords":
-				dashboardState.setPasswordsIconEnabled(enable);
-				dashboardState.setPasswordsIconChanged(true);
-				break;
-			case "Secure Notes":
-				dashboardState.setNotesIconEnabled(enable);
-				dashboardState.setNotesIconChanged(true);
-				break;
-		}	
-		setChanged();
-		notifyObservers(dashboardState);
-	}
-	
+	/**
+	 * launch the page correspondent to the given name
+	 * 
+	 * @param name the page name
+	 */
 	public void lauchPage(String name)
 	{
 		switch(name)
 		{
 			case "Preferences":
-				//dashboardState.setPreferencesIconChanged(true);
-				//dashboardState.setPreferencesIconEnabled(true);
-				//dashboardState.setPasswordsIconEnabled(false);
-				//dashboardState.setNotesIconEnabled(false);
 				dashboardState.setLaunchPreferencesPage(true);
 				dashboardState.setLaunchPasswordsPage(false);
 				dashboardState.setLaunchNotesPage(false);
 				break;
 			case "Passwords":
-				//dashboardState.setPreferencesIconChanged(true);
-				//dashboardState.setPasswordsIconEnabled(true);
-				//dashboardState.setPreferencesIconEnabled(false);
-				//dashboardState.setNotesIconEnabled(false);
 				dashboardState.setLaunchPasswordsPage(true);
 				dashboardState.setLaunchPreferencesPage(false);
 				dashboardState.setLaunchNotesPage(false);
 				break;
 			case "Secure Notes":
-				//dashboardState.setPreferencesIconChanged(true);
-				//dashboardState.setNotesIconEnabled(true);
-				//dashboardState.setPreferencesIconEnabled(false);
-				//dashboardState.setPasswordsIconEnabled(false);
 				dashboardState.setLaunchNotesPage(true);
 				dashboardState.setLaunchPreferencesPage(false);
 				dashboardState.setLaunchPasswordsPage(false);		

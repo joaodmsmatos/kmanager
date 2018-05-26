@@ -19,6 +19,7 @@ package com.matossoft.kmanager.ui;
 import com.matossoft.kmanager.model.LoginModel;
 import com.matossoft.kmanager.state.LoginState;
 import com.matossoft.kmanager.ui.components.ComponentFactory.ComponentType;
+import com.matossoft.kmanager.ui.components.KButton;
 import com.matossoft.kmanager.ui.components.ComponentFactory;
 import com.matossoft.kmanager.utils.UIConstants;
 import com.matossoft.kmanager.utils.UIHelper;
@@ -114,7 +115,7 @@ public class LoginViewController extends JFrame implements Observer
     private void createLogopanel()
     {
     	JPanel kmanagerLogoPanel = (JPanel) ComponentFactory.
-    			getComponent(ComponentType.LOGO_PANEL, KMANAGER_IMAGE_DIMENSION);
+    			getComponent(ComponentType.LOGO_PANEL, KMANAGER_IMAGE_DIMENSION,null,null);
         
     	// add logo panel to content pane
         getContentPane().add(kmanagerLogoPanel);
@@ -185,12 +186,8 @@ public class LoginViewController extends JFrame implements Observer
     	confirmPanel.setMinimumSize(CONFIRM_PANEL_DIMENSION);
     	
     	//set child arguments
-    	JLabel okLabel = new JLabel();
-        okLabel.setFont(UIConstants.FONT_MEDIUM);
-        okLabel.setForeground(Color.WHITE);
-        okLabel.setText("OK");
-        okLabel.setAutoscrolls(true);
-        okLabel.addMouseListener(new MouseAdapter() 
+    	KButton okButton = (KButton) ComponentFactory.getComponent(ComponentType.BUTTON,null,"OK", null);
+    	okButton.addMouseListener(new MouseAdapter() 
         {
         	@Override
             public void mouseReleased(MouseEvent evt) 
@@ -199,11 +196,8 @@ public class LoginViewController extends JFrame implements Observer
             }
         }); 
         
-        JLabel cancelLabel = new JLabel();
-        cancelLabel.setFont(UIConstants.FONT_MEDIUM);
-        cancelLabel.setForeground(Color.WHITE);
-        cancelLabel.setText("Cancel");
-        cancelLabel.addMouseListener(new MouseAdapter() 
+    	KButton cancelButton = (KButton) ComponentFactory.getComponent(ComponentType.BUTTON,null,"Cancel", null);
+    	cancelButton.addMouseListener(new MouseAdapter() 
         {
         	@Override
             public void mouseReleased(MouseEvent evt) 
@@ -212,11 +206,8 @@ public class LoginViewController extends JFrame implements Observer
             }
         });      
         
-        JLabel notRegisteredLabel = new JLabel();
-        notRegisteredLabel.setFont(UIConstants.FONT_MEDIUM);
-        notRegisteredLabel.setForeground(Color.WHITE);
-        notRegisteredLabel.setText("Not registered? ");
-        notRegisteredLabel.addMouseListener(new MouseAdapter() 
+    	KButton notRegisteredButton = (KButton) ComponentFactory.getComponent(ComponentType.BUTTON,null,"Not registered? ", null);
+    	notRegisteredButton.addMouseListener(new MouseAdapter() 
         {
         	@Override
             public void mouseReleased(MouseEvent evt) 
@@ -224,11 +215,11 @@ public class LoginViewController extends JFrame implements Observer
         		loginModel.register();
             }
         }); 
-        
+    	
         // add childs
-    	confirmPanel.add(okLabel);
-    	confirmPanel.add(cancelLabel);
-    	confirmPanel.add(notRegisteredLabel);
+    	confirmPanel.add(okButton);
+    	confirmPanel.add(cancelButton);
+    	confirmPanel.add(notRegisteredButton);
     	
     	// add argument panel to content pane
     	getContentPane().add(confirmPanel);
